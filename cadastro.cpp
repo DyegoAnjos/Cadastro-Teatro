@@ -7,13 +7,29 @@
 
 struct tcadastro{
 	char nome[50];
-	int cpf;
+	int cpf, cadeira;
 };
 struct tcadastro cadastro[50];
 
+void linha(){
+	printf("\n------------------------------");
+}
+
+//int desistencia(int cpf, cont){
+//	int i,j;
+//	
+//	for(i=0;i<=cont;i++){
+//		if(auxN==cadastro[i].cpf){
+//			
+//		}
+//	}
+//	cont--;
+//	return true;
+//}
+
 int main(){
-	int escolha, cont=-1, contComparador=0;
-	char soun, aux[50];
+	int escolha, cont=-1, contComparador=0,igual, auxN, auxC;
+	char soun, auxS[50];
 	FILE *arq;
 	setlocale(LC_ALL, "portuguese");
 	
@@ -39,10 +55,12 @@ int main(){
 					printf("::::::::::Cadastro::::::::::");
 					printf("\nDigite o seu nome:");
 					scanf("%s", &cadastro[cont].nome);
+					cadastro[cont].nome[0]=toupper(cadastro[cont].nome[0]);
 					
 					printf("\nDigite o seu cpf:");
 					scanf("%d", &cadastro[cont].cpf);
 					
+					cadastro[cont].cadeira=cont+1;
 					printf("\nDeseja conitnuar?S/N");
 					soun=toupper(getch());
 					if(soun == 'N')
@@ -53,13 +71,18 @@ int main(){
 		case 2:{
 				system("cls");
 				printf("::::::::::Listas de Pessoas::::::::::");
-				
+				//Passar para função depois
 				while(contComparador < cont){
-					
-					if(strcmp(cadastro[contComparador].nome,cadastro[contComparador++].nome)>0){
-						strcpy(aux,cadastro[contComparador].nome);
-						strcpy(cadastro[contComparador].nome,cadastro[contComparador++].nome);
-						strcpy(cadastro[contComparador++].nome,aux);
+					igual = strcmp(cadastro[contComparador].nome,cadastro[contComparador+1].nome);
+					if(igual>0){
+						strcpy(auxS,cadastro[contComparador].nome);
+						auxN=cadastro[contComparador].cpf;
+						auxC=cadastro[contComparador].cadeira;
+						strcpy(cadastro[contComparador].nome,cadastro[contComparador+1].nome);
+						cadastro[contComparador].cadeira=cadastro[contComparador+1].cadeira;
+						strcpy(cadastro[contComparador+1].nome,auxS);
+						cadastro[contComparador+1].cadeira=auxC;
+						contComparador=0;
 					}
 					
 					else
@@ -70,14 +93,19 @@ int main(){
 				for(int i=0;i<=cont;i++){
 					printf("\nNome:%s", cadastro[i].nome);
 					printf("\nCpf:%d", cadastro[i].cpf);
-					if(i > 10){
-						printf("\nReserva");
+					printf("\nCadeira:%d",cadastro[i].cadeira);
+					if(cadastro[i].cadeira > 10){
+						printf("\n--Reserva--");
 					}
+					linha();
 				}
 				getch();
 		break;}
 		case 3:{
-				
+				printf("::::::::::Desistencia::::::::::");
+				printf("\nDigite o Cpf da Desistencia:");
+				scanf("%d",auxN);
+//				desistencia(auxN,cont);
 		break;}
 		case 0:{
 			return 0;	
