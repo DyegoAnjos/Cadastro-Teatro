@@ -35,18 +35,18 @@ int ordenar(int cont,int auxN, int auxC,char* auxS){
 	}
 }
 
-/*int desistencia(int auxN,int cont){
-	for(int i=0;i<cont;i++){
+int desistencia(int auxN,int cont){
+	for(int i=0;i<=cont;i++){
 		if(cadastro[i].cpf == auxN){
 			for(int j=0;j<cont;j++){
-				if(j>10){
+				if(cadastro[j].cadeira>10){
 					cadastro[i].cpf=cadastro[j].cpf;
 					strcpy(cadastro[i].nome,cadastro[j].nome);
 				}
 			}			
 		}
 	}
-}*/
+}
 
 
 int main(){
@@ -113,7 +113,8 @@ int main(){
 					printf("::::::::::Desistencia::::::::::");
 					printf("\nDigite o Cpf da Desistencia:");
 					scanf("%d",auxN);
-	//				desistencia(auxN,cont);
+					desistencia(auxN,cont);
+					main();
 			break;}
 			case 0:{
 				return 0;	
