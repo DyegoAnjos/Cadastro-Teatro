@@ -5,8 +5,6 @@
 #include <string.h> 
 #include <ctype.h>
 
-//10 ativo
-
 struct tcadastro{
 	char nome[50];
 	int cpf, cadeira;
