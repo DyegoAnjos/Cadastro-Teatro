@@ -9,18 +9,16 @@ struct tcadastro{
 	char nome[50];
 	int cpf, cadeira;
 };
-struct tcadastro cadastro[];
+struct tcadastro cadastro[100];
 
 void linha(){
 	printf("\n------------------------------");
 }
 
 int ordenar(int cont,char* auxS){
-	
 	int contComparador=0,igual,auxN,auxC;
 	
 	while(contComparador < cont){
-		
 		igual = strcmp(cadastro[contComparador].nome,cadastro[contComparador+1].nome);
 		if(igual>0){
 			
@@ -45,26 +43,27 @@ int ordenar(int cont,char* auxS){
 }
 
 int desistencia(int auxN,int cont){
-	
 	for(int i=0;i<=cont;i++){
 		if(cadastro[i].cpf == auxN){
 			for(int j=0;j<cont;j++){
-				if(cadastro[j].cadeira>10){
-					cadasy(cadastro[i].nome,cadastro[j].nome);
-					cadtro[i].cpf=cadastro[j].cpf;
-					strcpastro[j].cadeira=cadastro[i].cadeira;
-					
-					
-					return 0;
-				}	
+				strcpy(cadastro[i].nome,cadastro[i+1].nome);
+				cadastro[i].cpf=cadastro[i+1].cpf;
+				cadastro[i+1].cadeira=cadastro[i].cadeira;
 			}		
 		}
 	}
 	return 0;
 }
 
+bool validarCPF(int indice, int cont){
+	for(int i=0;i<=cont;i++){
+		if(indice==cadastro[i].cpf)
+			return false;
+	}
+	return true;
+}
+
 int main(){
-	
 	int escolha, cont=-1, auxN, auxC;
 	char soun, auxS[50];
 	
@@ -100,21 +99,31 @@ int main(){
 					}while(auxN==0);
 					if(strcmp(auxS,"0")==0)
 						break;
+						
 					strcpy(cadastro[cont].nome,auxS);
 					cadastro[cont].nome[0]=toupper(cadastro[cont].nome[0]);
 					
 					printf("\nDigite o seu cpf:");
-					scanf("%d", &cadastro[cont].cpf);
+					do{
+						scanf("%d", &auxN);
+						if(validarCPF(auxN,cont)==true)
+							break;
+						else
+							printf("Cpf já existente");
+					}while(1);
+					
+					cadastro[cont].cpf=auxN;
 					
 					cadastro[cont].cadeira=cont+1;
-					/*printf("\nDeseja conitnuar?S/N");
+					printf("\nDeseja conitnuar?S/N");
 					
 					soun=toupper(getch());
 					if(soun == 'N')
-						break;*/
+						break;
 				}
 				
 			break;}
+			
 			case 2:{
 					system("cls");
 					printf("::::::::::Listas de Pessoas::::::::::");
@@ -131,17 +140,27 @@ int main(){
 					}
 					getch();
 			break;}
+			
 			case 3:{
 					printf("::::::::::Desistencia::::::::::");
 					printf("\nDigite o Cpf da Desistencia:");
-					scanf("%d",&auxN);
-					desistencia(auxN,cont);
+					do{
+						scanf("%d",&auxN);
+						if(validarCPF(auxN,cont)==false){
+							desistencia(auxN,cont);
+							break;
+						}
+						else
+							printf("\nCpf não encontrado");
+					}while(1);
+					cont--;
 			break;}
+			
 			case 0:{
 				return 0;	
 			break;}
 		}
 	
-		}
+	}
 	return 0;
 }
