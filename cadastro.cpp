@@ -45,14 +45,24 @@ int ordenar(int cont,char* auxS){
 int desistencia(int auxN,int cont){
 	for(int i=0;i<=cont;i++){
 		if(cadastro[i].cpf == auxN){
-			for(int j=0;j<cont;j++){
-				strcpy(cadastro[i].nome,cadastro[i+1].nome);
-				cadastro[i].cpf=cadastro[i+1].cpf;
-				cadastro[i+1].cadeira=cadastro[i].cadeira;
+			for(int j=i;j<cont;j++){
+				cadastro[j]=cadastro[j+1];
 			}		
 		}
 	}
-	return 0;
+	cont--;
+	return cont;
+}
+
+void desistencia2(int auxN,int &cont){
+	for(int i=0;i<=cont;i++){
+		if(cadastro[i].cpf == auxN){
+			for(int j=i;j<cont;j++){
+				cadastro[j]=cadastro[j+1];
+			}		
+		}
+	}
+	cont--;
 }
 
 bool validarCPF(int indice, int cont){
@@ -153,7 +163,6 @@ int main(){
 						else
 							printf("\nCpf não encontrado");
 					}while(1);
-					cont--;
 			break;}
 			
 			case 0:{
